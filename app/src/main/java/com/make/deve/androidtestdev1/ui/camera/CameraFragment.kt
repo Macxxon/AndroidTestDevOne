@@ -1,28 +1,22 @@
-package com.make.deve.androidtestdev1.camera
+package com.make.deve.androidtestdev1.ui.camera
 
 import android.content.ContentValues.TAG
-import android.net.Uri
+import android.content.pm.PackageManager
 import android.os.Bundle
-import android.os.FileUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
-import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.navigation.navGraphViewModels
-import com.make.deve.androidtestdev1.R
-import com.make.deve.androidtestdev1.Utils.FileUtils.createImageFile
+import androidx.navigation.fragment.findNavController
 import com.make.deve.androidtestdev1.databinding.FragmentCameraBinding
-import java.io.File
-import java.io.IOException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -32,6 +26,7 @@ class CameraFragment:Fragment() {
     private lateinit var cameraExecutor: ExecutorService
     private var mCurrentPhotoPath = ""
     private var imageCapture: ImageCapture? = null
+    private val CODE_REQUEST_CAMERA = 1111
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,7 +37,6 @@ class CameraFragment:Fragment() {
         binding = FragmentCameraBinding.inflate(inflater, container, false)
 
         // hide the action bar
-        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS)
         // Check camera permissions if all permission granted
         // start camera else ask for the permission
 
@@ -55,6 +49,12 @@ class CameraFragment:Fragment() {
         binding.cameraCaptureButton!!.setOnClickListener {
             takePhoto()
         }
+
+        binding.cameraCancelButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
+
         cameraExecutor = Executors.newSingleThreadExecutor()
 
         return binding.root
@@ -156,5 +156,30 @@ class CameraFragment:Fragment() {
             }
 
         }, ContextCompat.getMainExecutor(context))
+    }
+
+    private fun requestPermissions() {
+        requestPermissions(
+            arrayOf(
+                android.Manifest.permission.CAMERA,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ), CODE_REQUEST_CAMERA
+        )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (ActivityCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+            || ActivityCompat.checkSelfPermission(
+                requireContext(),
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            requestPermissions()
+        }
+
     }
 }

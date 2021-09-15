@@ -1,6 +1,7 @@
-package com.make.deve.androidtestdev1.Utils
+package com.make.deve.androidtestdev1.util
 
 import androidx.annotation.IntegerRes
+import com.make.deve.androidtestdev1.ui.App
 
 object Integers {
     fun get(@IntegerRes stringRes: Int): Int {

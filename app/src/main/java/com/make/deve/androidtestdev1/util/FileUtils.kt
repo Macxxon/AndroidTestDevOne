@@ -1,10 +1,11 @@
-package com.make.deve.androidtestdev1.Utils
+package com.make.deve.androidtestdev1.util
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.util.Log
+import com.make.deve.androidtestdev1.R
 import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
@@ -41,7 +42,7 @@ object FileUtils {
         Log.d("ImgSize", "" + file.length() / 1024)
         val opt = BitmapFactory.Options()
         opt.inSampleSize = 2
-        while (file.length() / 1024 > 2560) {
+        while (file.length() / 1024 > Integers.get(R.integer.util_maxImageSize)) {
             val smallBitmap = BitmapFactory.decodeFile(path, opt)
             var stream: FileOutputStream
             try {

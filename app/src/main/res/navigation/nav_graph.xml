@@ -3,11 +3,22 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_graph">
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_menu">
+
+        <fragment
+            android:id="@+id/nav_menu"
+            android:name="com.make.deve.androidtestdev1.ui.menu.MenuFragment"
+            tools:layout="@layout/fragment_menu"/>
 
         <fragment
             android:id="@+id/nav_fragment_camera"
-            android:name="com.make.deve.androidtestdev1.camera.CameraFragment"
+            android:name="com.make.deve.androidtestdev1.ui.camera.CameraFragment"
             tools:layout="@layout/fragment_camera"/>
+
+        <fragment
+            android:id="@+id/nav_fragment_list"
+            android:name="com.make.deve.androidtestdev1.ui.list.ListFragment"
+            tools:layout="@layout/fragment_list"/>
 
 </navigation>
