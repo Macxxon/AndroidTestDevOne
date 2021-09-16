@@ -2,21 +2,31 @@ package com.make.deve.androidtestdev1.ui.camera
 
 import android.content.ContentValues.TAG
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider.getUriForFile
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
+import com.make.deve.androidtestdev1.BuildConfig
+import com.make.deve.androidtestdev1.R
 import com.make.deve.androidtestdev1.databinding.FragmentCameraBinding
+import com.make.deve.androidtestdev1.util.FileUtils
+import java.io.File
+import java.io.IOException
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
@@ -27,6 +37,8 @@ class CameraFragment:Fragment() {
     private var mCurrentPhotoPath = ""
     private var imageCapture: ImageCapture? = null
     private val CODE_REQUEST_CAMERA = 1111
+
+    private val vm: CameraViewModel by navGraphViewModels(R.id.nav_fragment_camera)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -61,7 +73,6 @@ class CameraFragment:Fragment() {
     }
 
     private fun takePhoto() {
-/*
         //other
 
         /* val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)*/
@@ -76,8 +87,7 @@ class CameraFragment:Fragment() {
         try {
             photoFile = FileUtils.createImageFile(
                 requireContext(),
-                vm.selectedVin.value ?: "",
-                FileUtils.PhotoType.INSPECTIONENTRY
+                FileUtils.PhotoType.NEW
 
 
             )//createImageFile()
@@ -106,17 +116,22 @@ class CameraFragment:Fragment() {
 
                 override fun onImageSaved(output: ImageCapture.OutputFileResults) {
                     val savedUri = Uri.fromFile(photoFile)
+                    val contentPhotoURI: Uri = getUriForFile(requireContext(),BuildConfig.providerAuthority,photoFile!!)
                     Log.d(TAG, "captureImage: Content URI is ")
 
                     mCurrentPhotoPath = photoFile!!.absolutePath
 
                     // set the saved uri to the image view
+                    vm.addPhoto(mCurrentPhotoPath)
 
+                    Log.d(TAG, "SAVE: Content URI is ")
+
+                    findNavController().navigate(R.id.nav_fragment_preview_camera)
 
                     val msg = "Photo capture succeeded: $savedUri"
                     Log.d(TAG, msg)
                 }
-            })*/
+            })
 
     }
 

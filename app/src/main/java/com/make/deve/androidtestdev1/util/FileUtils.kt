@@ -14,7 +14,7 @@ import java.util.*
 object FileUtils {
 
     @SuppressLint("SimpleDateFormat")
-    fun createImageFile(context: Context, vin: String, type: PhotoType = PhotoType.NONE): File {
+    fun createImageFile(context: Context,  type: PhotoType = PhotoType.NONE): File {
         // Create an image file name
         val r = Random()
         val min = r.nextInt(15376 - 10007 + 1) + 10007
@@ -22,12 +22,9 @@ object FileUtils {
         val rand = r.nextInt(max - min + 1) + min
         val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val imageFileName = when (type) {
-            PhotoType.INSPECTIONENTRY -> "IE_"
-            PhotoType.INSPECTIONCAMP -> "IC_"
-            PhotoType.INSPECTIONEXIT -> "IS_"
-            PhotoType.NOVELTY -> "N_"
+            PhotoType.NEW -> "N_"
             PhotoType.NONE -> "P_"
-        } + vin + "_" + timeStamp + "_" + rand
+        } + timeStamp + "_" + rand
 
         val storageDir = File(context.filesDir, "photos/")
         //File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).path + "/Travesa")
@@ -58,10 +55,7 @@ object FileUtils {
     }
 
     enum class PhotoType {
-        INSPECTIONENTRY,
-        INSPECTIONCAMP,
-        INSPECTIONEXIT,
-        NOVELTY,
+        NEW,
 
         NONE;
     }

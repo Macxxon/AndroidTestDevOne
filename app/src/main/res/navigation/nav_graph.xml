@@ -21,4 +21,14 @@
             android:name="com.make.deve.androidtestdev1.ui.list.ListFragment"
             tools:layout="@layout/fragment_list"/>
 
+        <fragment
+            android:id="@+id/nav_fragment_preview_camera"
+            android:name="com.make.deve.androidtestdev1.ui.camera.CameraPreviewFragment"
+            tools:layout="@layout/fragment_preview_camera"/>
+
+        <fragment
+            android:id="@+id/nav_fragment_add"
+            android:name="com.make.deve.androidtestdev1.ui.camera.FormularioEditFragment"
+            tools:layout="@layout/fragment_formulario_edit"/>
+
 </navigation>

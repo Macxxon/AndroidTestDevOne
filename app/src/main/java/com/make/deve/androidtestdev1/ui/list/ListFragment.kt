@@ -61,6 +61,12 @@ class ListFragment: Fragment() {
             binding.swipe.isRefreshing = false
         }
 
+        vm.photoEntityList.observe(viewLifecycleOwner){
+            it?.let{
+                adapter.submitList(it)
+            }
+        }
+
         return binding.root
     }
 

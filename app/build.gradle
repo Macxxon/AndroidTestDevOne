@@ -21,8 +21,14 @@ android {
 
     buildTypes {
         release {
+            manifestPlaceholders providerAuthority: 'com.make.deve.androidtestdev1.fileprovider'
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            buildConfigField "String", "providerAuthority", "\"com.make.deve.androidtestdev1.fileprovider\""
+        }
+        debug {
+            manifestPlaceholders providerAuthority: 'com.make.deve.androidtestdev1.fileprovider'
+            buildConfigField "String", "providerAuthority", "\"com.make.deve.androidtestdev1.fileprovider\""
         }
     }
     buildFeatures {

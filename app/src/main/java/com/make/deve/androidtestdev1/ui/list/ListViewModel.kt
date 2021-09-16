@@ -12,7 +12,7 @@ import org.koin.core.inject
 class ListViewModel: ViewModel(), KoinComponent {
 
     val repo: IDataBaseLocal by inject()
-    private val photoEntityList: MutableLiveData<List<PhotoDBEntity>> = MutableLiveData()
+    val photoEntityList: MutableLiveData<List<PhotoDBEntity>> = MutableLiveData()
     val loading = MutableLiveData(false)
 
     fun getAllItems() {
